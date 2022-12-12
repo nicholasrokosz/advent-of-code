@@ -8,7 +8,7 @@ const buildMonkey = desc => {
   monkey.items = lines[0].match(/\d+/g).map(str => +str)
   monkey.op = eval(`old => ${lines[1].match(/old.+/g)}`)
   monkey.divisibleBy = lines[2].match(/\d+/g)[0]
-  monkey.test = worry => worry % monkey.divisibleBy === 0 ? lines[3].slice(-1) : lines[4].slice(-1)
+  monkey.test = worry => lines[worry % monkey.divisibleBy === 0 ? 3 : 4].slice(-1)
   monkey.itemsInspected = 0
 
   return monkey
