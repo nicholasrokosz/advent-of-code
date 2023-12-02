@@ -7,23 +7,23 @@ const currentDirs = []
 const dirSizes = {}
 
 const cd = cmd => {
-  const dir = cmd.slice(5)
+    const dir = cmd.slice(5)
 
-  if (dir === '..') {
-    currentDirs.pop()
-  } else if (!(dir in dirSizes)) {
-    dirSizes[dir] = 0
-    currentDirs.push(dir)
-  } else {
-    const hashedDir = `${dir}-${crypto.randomUUID()}`
-    dirSizes[hashedDir] = 0
-    currentDirs.push(hashedDir)
-  }
+    if (dir === '..') {
+        currentDirs.pop()
+    } else if (!(dir in dirSizes)) {
+        dirSizes[dir] = 0
+        currentDirs.push(dir)
+    } else {
+        const hashedDir = `${dir}-${crypto.randomUUID()}`
+        dirSizes[hashedDir] = 0
+        currentDirs.push(hashedDir)
+    }
 }
 
 for (const [index, line] of linesArr.entries()) {
-  if (line.startsWith('$ cd')) cd(line)
-  else if (/^\d/.test(line)) currentDirs.forEach(dir => dirSizes[dir] += +line.match(/\d+/)) 
+    if (line.startsWith('$ cd')) cd(line)
+    else if (/^\d/.test(line)) currentDirs.forEach(dir => dirSizes[dir] += +line.match(/\d+/))
 }
 
 const answer1 = Object.values(dirSizes).filter(n => n <= 100_000).reduce((a, b) => a + b)

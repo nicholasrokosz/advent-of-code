@@ -26,7 +26,7 @@ let group = []
 let total2 = 0
 
 for (const rucksack of input.split('\n')) {
-  
+
   if (group.length === 3) {
     groupsArr.push(group)
     group = []
