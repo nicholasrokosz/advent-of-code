@@ -11,7 +11,7 @@ const lineToObj = (line) => {
   const [gameNumber, handfullsStr] = line.split(":").map((i) => i.trim());
   const handfulls = handfullsStr.split(/,|;/).map((i) => i.trim());
 
-  obj.gameNumber = +gameNumber[gameNumber.search(/\d/)];
+  obj.gameNumber = +gameNumber.match(/\d+/)[0];
 
   for (const numberColorPair of handfulls) {
     const [number, color] = numberColorPair.split(" ");
