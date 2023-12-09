@@ -7,18 +7,18 @@ Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
 Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green`;
 
 const lineToObj = (line) => {
-  const obj = { red: [], green: [], blue: [] };
+  const gameObj = { red: [], green: [], blue: [] };
   const [gameNumber, handfullsStr] = line.split(":").map((i) => i.trim());
   const handfulls = handfullsStr.split(/,|;/).map((i) => i.trim());
 
-  obj.gameNumber = +gameNumber.match(/\d+/)[0];
+  gameObj.gameNumber = +gameNumber.match(/\d+/)[0];
 
   for (const numberColorPair of handfulls) {
     const [number, color] = numberColorPair.split(" ");
-    obj[color].push(+number);
+    gameObj[color].push(+number);
   }
 
-  return obj;
+  return gameObj;
 };
 
 const inputToArray = (input) => {
@@ -33,11 +33,24 @@ const gradeGame = ({ red, green, blue, gameNumber }) =>
     ? 0
     : gameNumber;
 
+const findMaxes = ({ red, green, blue }) => ({
+  red: Math.max(...red),
+  green: Math.max(...green),
+  blue: Math.max(...blue),
+});
+
 const maxRed = 12;
 const maxGreen = 13;
 const maxBlue = 14;
 
 const failedGameNumbers = inputToArray(input).map((game) => gradeGame(game));
-
 const answer = failedGameNumbers.reduce((a, b) => a + b, 0);
 console.log(answer);
+
+const gamesWithFewestPossibleColors = inputToArray(input).map((game) =>
+  findMaxes(game),
+);
+const answer2 = gamesWithFewestPossibleColors
+  .map(({ red, green, blue }) => red * green * blue)
+  .reduce((a, b) => a + b, 0);
+console.log(answer2);
